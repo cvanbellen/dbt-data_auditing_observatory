@@ -1,0 +1,21 @@
+
+version: 2
+
+models:
+  - name: example_legacy_model
+    description: "Example of a legacy model to be compared with its refactored counterpart"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: example_refactored_model
+    description: "Example of a refactored model to be compared with its legacy counterpart"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
