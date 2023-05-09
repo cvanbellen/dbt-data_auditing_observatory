@@ -128,9 +128,9 @@ Also, the ********************model_name******************** variable allows the
 
 Below is this example’s output, split into two screenshots. Note that the model name, associated with the run date information, can be used to generate automated data quality reports, warnings and Business Intelligence dashboards:
 
-![Untitled 3](https://user-images.githubusercontent.com/117457905/236838291-e9a539af-bdc0-4d4b-84ef-656c9cf1e3d8.png)
+![image](https://user-images.githubusercontent.com/117457905/236972413-53a30244-f3c3-4425-bbab-ad405adb93d7.png)
 
-![Untitled 4](https://user-images.githubusercontent.com/117457905/236838363-118bd6df-6eeb-4f65-9729-e08782b310a1.png)
+![image](https://user-images.githubusercontent.com/117457905/236972475-4c747ab2-ca85-489a-b79c-f7c977ab6747.png)
 
 ## 3. column_values_report():
 
@@ -195,6 +195,6 @@ Note that this macro follows the same shape as the previous one, the column_matc
 
 Below is the example output, split into two screenshots. Note how this EDA approach facilitates troubleshooting compatibility issues between the tables, making the AE’s life easier.
 
-![Untitled 5](https://user-images.githubusercontent.com/117457905/236838418-71b0c223-4aa7-4c5d-9f7c-1547f879da40.png)
+![image](https://user-images.githubusercontent.com/117457905/236972229-f359f60a-e2f9-46f2-a4ac-55bc1264b1ea.png)
 
-![Untitled 6](https://user-images.githubusercontent.com/117457905/236838473-07d5655c-f1fd-41bc-adfe-60f5126751cf.png)
+![image](https://user-images.githubusercontent.com/117457905/236972267-bda30ed1-3f6c-4df3-93e9-ac868fa55555.png)
