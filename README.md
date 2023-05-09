@@ -22,6 +22,7 @@ The most straightforward macro, it consists in a dimensional comparison between 
 
 - row count;
 - number of columns;
+- missing columns in comparison with its counterpart;
 - oldest date of a date column (optional);
 - newest date of a date column (optional).
 
