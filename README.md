@@ -56,11 +56,11 @@ Below we have the 2 possible outputs.
 
 The first possible output, when a date column is used within the comparison, shows up like this:
 
-![Untitled 1](https://user-images.githubusercontent.com/117457905/236838016-2d7db463-6723-417b-af37-e3b0851aa3bc.png)
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/d5f237bc-4604-4573-baf2-077578bfaeb7)
 
 And the second one, when the analysis does not involve a date column:
 
-![Untitled 2](https://user-images.githubusercontent.com/117457905/236838196-de682c9a-acd8-42fb-a4d7-57cb677e48da.png)
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/22242bcd-9f70-4e2f-9250-11a328f2dd87)
 
 ## 2. column_match_report():
 
@@ -128,9 +128,9 @@ Also, the ********************model_name******************** variable allows the
 
 Below is this example’s output, split into two screenshots. Note that the model name, associated with the run date information, can be used to generate automated data quality reports, warnings and Business Intelligence dashboards:
 
-![image](https://user-images.githubusercontent.com/117457905/236972413-53a30244-f3c3-4425-bbab-ad405adb93d7.png)
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/1024a6f8-035b-4422-bfbe-dd3576d6508b)
 
-![image](https://user-images.githubusercontent.com/117457905/236972475-4c747ab2-ca85-489a-b79c-f7c977ab6747.png)
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/b2af9ac2-3976-4dfb-8e79-cd18e1e7ca81)
 
 ## 3. column_values_report():
 
@@ -195,6 +195,6 @@ Note that this macro follows the same shape as the previous one, the column_matc
 
 Below is the example output, split into two screenshots. Note how this EDA approach facilitates troubleshooting compatibility issues between the tables, making the AE’s life easier.
 
-![image](https://user-images.githubusercontent.com/117457905/236972229-f359f60a-e2f9-46f2-a4ac-55bc1264b1ea.png)
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/cf452948-9fc4-422a-ae85-7c055fd681bb)
 
-![image](https://user-images.githubusercontent.com/117457905/236972267-bda30ed1-3f6c-4df3-93e9-ac868fa55555.png)
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/216f2fe1-400c-488f-8a77-7626b8902d9d)
