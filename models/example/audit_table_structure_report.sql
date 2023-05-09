@@ -6,6 +6,6 @@
     , new_db = 'metabase'
     , new_schema = 'dev'
     , new_table = 'example_refactored_model'
-    , db_connection = 'postgres'
+    , db_connection = 'postgres' --> Can be ['snowflake', 'postgres' or 'redshift']
     , date_column = 'created_date'
 ) }}

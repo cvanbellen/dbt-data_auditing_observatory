@@ -34,11 +34,16 @@ Below is the code used to run the ********************************************ta
 To run the macro, simply paste the following in a **.sql** file inside your dbt project, and replace the variables with the correspondent paths to your models and a date column:
 
 ```sql
--- Table Structure Report macro
+-- Table Structure Report
 {{ table_structure_report(
-    full_path_to_old = 'old_db.old_schema.old_table'
-    , full_path_to_new = 'new_db.new_schema.new_model'
-    , date_column = 'some_date_column'
+    old_db = 'old_database'
+    , old_schema = 'old_schema'
+    , old_table = 'example_old_model'
+    , new_db = 'new_database'
+    , new_schema = 'new_schema'
+    , new_table = 'example_refactored_model'
+    , db_connection = 'postgres' --> Can be ['snowflake', 'postgres', or 'redshift']
+    , date_column = 'created_date'
 ) }}
 ```
 
@@ -83,46 +88,38 @@ It is important to explicitly declare all the columns that are going to be evalu
 Also, the ********************model_name******************** variable allows the aggregation of several auditing reports together, that can be used to generate data auditing BI reports!
 
 ```sql
--- Column Match Report macro
-
--- Declare model name
-{% set model_name = 'OpportunitySupplemental' %}
-
--- Declare column names
+-- Declare audited column names
 {% set column_variables = [
-    'opportunity_id'
-    , 'opportunity_name'
-    , 'opportunity_type'
-		, 'opportunity_created_date'
+    'id'
+    , 'amount'
+    , 'created_date'
 ] %}
 
 -- Old model query
 {% set old_etl_relation_query %}
     select
-        opportunity_id
-				, opportunity_name
-				, opportunity_type
-				, date(create_date) as opportunity_created_date
-    from {{ ref('old_model_name') }}
+	    id
+        , amount
+        , created_date
+    from {{ ref('example_legacy_model') }}
 {% endset %}
 
 -- New model query
 {% set new_etl_relation_query %}
     select
-        opportunity_id
-				, opportunity_name
-				, opportunity_type
-				, date(create_date) as opportunity_created_date
-    from {{ ref('new_model_name') }}
+	    id
+        , amount
+        , created_date
+    from {{ ref('example_refactored_model') }}
 {% endset %}
 
--- Run macro
+-- Run audit macro
 {{ column_match_report(
-    old_query = old_etl_relation_query
+    primary_key = 'id'
+    , model_name = 'ExampleModel'
+    , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
-    , primary_key = 'opportunity_id'
     , columns_to_compare = column_variables
-    , name_of_model = model_name
 ) }}
 ```
 
@@ -155,46 +152,40 @@ To run the macro, simply paste the following in a **.sql** file inside your dbt 
 Note that this macro follows the same shape as the previous one, the column_match_report macro:
 
 ```sql
--- Column Values Report macro
-
--- Declare model name
-{% set model_name = 'OpportunitySupplemental' %}
-
--- Declare column names
+-- Declare audited column names
 {% set column_variables = [
-    'opportunity_id'
-    , 'opportunity_name'
-    , 'opportunity_type'
-		, 'opportunity_created_date'
+    'id'
+    , 'amount'
+    , 'created_date'
 ] %}
 
 -- Old model query
 {% set old_etl_relation_query %}
     select
-        opportunity_id
-				, opportunity_name
-				, opportunity_type
-				, date(create_date) as opportunity_created_date
-    from {{ ref('old_model_name') }}
+	    id
+        , amount
+        , created_date
+    from {{ ref('example_legacy_model') }}
 {% endset %}
 
 -- New model query
 {% set new_etl_relation_query %}
     select
-        opportunity_id
-				, opportunity_name
-				, opportunity_type
-				, date(create_date) as opportunity_created_date
-    from {{ ref('new_model_name') }}
+	    id
+        , amount
+        , created_date
+    from {{ ref('example_refactored_model') }}
 {% endset %}
 
--- Run macro
+-- Run audit macro
 {{ column_values_report(
-    old_query = old_etl_relation_query
+    primary_key = 'id'
+    , model_name = 'ExampleModel'
+    , db_connection = 'postgres' --> Can be ['snowflake', 'postgres' or 'redshift']
+    , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
-    , primary_key = 'opportunity_id'
     , columns_to_compare = column_variables
-    , name_of_model = model_name
+
 ) }}
 ```
 
