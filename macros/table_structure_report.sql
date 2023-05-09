@@ -1,14 +1,4 @@
-{% macro table_structure_report(full_path_to_old, full_path_to_new, date_column=None) -%}
-
-
-{% set old_db = full_path_to_old.split('.')[0] %}
-{% set old_schema = full_path_to_old.split('.')[1] %}
-{% set old_table = full_path_to_old.split('.')[2] %}
-
-{% set new_db = full_path_to_new.split('.')[0] %}
-{% set new_schema = full_path_to_new.split('.')[1] %}
-{% set new_table = full_path_to_new.split('.')[2] %}
-
+{% macro table_structure_report(old_db, old_schema, old_table, new_db, new_schema, new_table, db_connection, date_column=None) -%}
 
 with
     old_columns_query as (
@@ -30,7 +20,12 @@ with
     , missing_from_old as (
         select
             'Old' as model
-            , listagg(new_columns_query.column_name, '; ') as missing_columns
+            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            , string_agg(new_columns_query.column_name, '| ') as missing_columns
+            {% endif %}
+            {% if db_connection == 'snowflake' %}
+            , listagg(new_columns_query.column_name, '| ') as missing_columns
+            {% endif %}
         from new_columns_query
         left join old_columns_query on
             new_columns_query.column_name = old_columns_query.column_name
@@ -40,7 +35,12 @@ with
     , missing_from_new as (
         select
             'New' as model
-            , listagg(old_columns_query.column_name, '; ') as missing_columns
+            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            , string_agg(old_columns_query.column_name, '| ') as missing_columns
+            {% endif %}
+            {% if db_connection == 'snowflake' %}
+            , listagg(old_columns_query.column_name, '| ') as missing_columns
+            {% endif %}
         from old_columns_query
         left join new_columns_query on
             old_columns_query.column_name = new_columns_query.column_name
@@ -52,8 +52,8 @@ with
             'Old' as model
             , count(*) as row_count
             {% if date_column is not none %}
-            , min({{ date_column }})::timestamp_tz as min_{{ date_column }}
-            , max({{ date_column }})::timestamp_tz as max_{{ date_column }}
+            , min({{ date_column }})::timestamp as min_{{ date_column }}
+            , max({{ date_column }})::timestamp as max_{{ date_column }}
             {% endif %}
         from {{ ref(old_table)}}
     )
@@ -90,8 +90,8 @@ with
             'New' as model
             , count(*) as row_count
             {% if date_column is not none %}
-            , min({{ date_column }})::timestamp_tz as min_{{ date_column }}
-            , max({{ date_column }})::timestamp_tz as max_{{ date_column }}
+            , min({{ date_column }})::timestamp as min_{{ date_column }}
+            , max({{ date_column }})::timestamp as max_{{ date_column }}
             {% endif %}
         from {{ ref(new_table)}}
     )

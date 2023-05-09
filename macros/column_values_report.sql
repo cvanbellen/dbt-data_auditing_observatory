@@ -1,4 +1,4 @@
-{% macro column_values_report(old_query, new_query, primary_key, columns_to_compare, name_of_model) -%}
+{% macro column_values_report(old_query, new_query, primary_key, columns_to_compare, model_name, db_connection) -%}
 
 with
     old_query as ({{ old_query }})
@@ -10,14 +10,26 @@ with
     , {{ column }}_old as (
         select
             '{{ column }}' as column_name
+            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            , pg_typeof({{ column }}) as old_data_type
+            {% endif %}
+            {% if db_connection == 'snowflake' %}
             , typeof({{ column }}::variant) as old_data_type
+            {% endif %}
+
         from old_query
     )
 
     , {{ column }}_new as (
         select
             '{{ column }}' as column_name
-            , typeof({{ column }}::variant) as new_data_type
+            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            , pg_typeof({{ column }}) as new_data_type
+            {% endif %}
+            {% if db_connection == 'snowflake' %}
+            , typeof({{ column }}::variant) as old_data_type
+            {% endif %}
+
         from new_query
     )
 
@@ -95,8 +107,8 @@ with
 
     , current_date_and_model_name as (
         select
-            '{{ name_of_model }}' as model_name
-            , current_date() as run_date
+            '{{ model_name }}' as model_name
+            , current_date as run_date
             , *
         from report_union
     )

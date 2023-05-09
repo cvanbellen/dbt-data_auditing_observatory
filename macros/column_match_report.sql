@@ -1,4 +1,4 @@
-{% macro column_match_report(old_query, new_query, primary_key, columns_to_compare, name_of_model) -%}
+{% macro column_match_report(old_query, new_query, primary_key, columns_to_compare, model_name) -%}
 
 with
     old_query as ({{ old_query }})
@@ -147,8 +147,8 @@ with
 
     , current_date_and_model_name as (
         select
-            '{{ name_of_model }}' as model_name
-            , current_date() as run_date
+            '{{ model_name }}' as model_name
+            , current_date as run_date
             , *
         from agg_values
     )
