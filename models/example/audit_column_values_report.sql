@@ -24,10 +24,11 @@
 {% endset %}
 
 -- Run audit macro
+--> db_connection can be ['snowflake', 'postgres' or 'redshift']
 {{ column_values_report(
     primary_key = 'id'
     , model_name = 'ExampleModel'
-    , db_connection = 'postgres' --> Can be ['snowflake', 'postgres' or 'redshift']
+    , db_connection = 'postgres'
     , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
     , columns_to_compare = column_variables

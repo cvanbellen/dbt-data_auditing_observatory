@@ -27,7 +27,7 @@ with
             , pg_typeof({{ column }}) as new_data_type
             {% endif %}
             {% if db_connection == 'snowflake' %}
-            , typeof({{ column }}::variant) as old_data_type
+            , typeof({{ column }}::variant) as new_data_type
             {% endif %}
 
         from new_query
