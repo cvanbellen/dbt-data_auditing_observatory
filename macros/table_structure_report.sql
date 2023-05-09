@@ -73,11 +73,11 @@ with
             old.model
             , old.row_count
             , old_columns.number_of_columns
+            , missing_from_old.missing_columns
             {% if date_column is not none %}
             , old.min_{{ date_column }}
             , old.max_{{ date_column }}
             {% endif %}
-            , missing_from_old.missing_columns
         from old
         left join old_columns on
             old.model = old_columns.model
@@ -111,11 +111,11 @@ with
             new.model
             , new.row_count
             , new_columns.number_of_columns
+            , missing_from_new.missing_columns
             {% if date_column is not none %}
             , new.min_{{ date_column }}
             , new.max_{{ date_column }}
             {% endif %}
-            , missing_from_new.missing_columns
         from new
         left join new_columns on
             new.model = new_columns.model
