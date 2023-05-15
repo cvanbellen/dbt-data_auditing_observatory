@@ -49,7 +49,7 @@ with
     , report_union as (
         select * from {{ columns_to_compare[0] }}_cte
         {% for column in columns_to_compare[1:] %}
-        union
+        union all
         select * from {{ column }}_cte
         {% endfor %}
     )

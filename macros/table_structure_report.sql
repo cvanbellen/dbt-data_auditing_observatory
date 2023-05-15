@@ -20,7 +20,7 @@ with
     , missing_from_old as (
         select
             'Old' as model
-            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            {% if db_connection == 'postgres' %}
             , string_agg(new_columns_query.column_name, '| ') as missing_columns
             {% endif %}
             {% if db_connection == 'snowflake' %}
@@ -35,7 +35,7 @@ with
     , missing_from_new as (
         select
             'New' as model
-            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            {% if db_connection == 'postgres' %}
             , string_agg(old_columns_query.column_name, '| ') as missing_columns
             {% endif %}
             {% if db_connection == 'snowflake' %}
@@ -52,8 +52,8 @@ with
             'Old' as model
             , count(*) as row_count
             {% if date_column is not none %}
-            , min({{ date_column }})::timestamp as min_{{ date_column }}
-            , max({{ date_column }})::timestamp as max_{{ date_column }}
+            , cast(min({{ date_column }}) as timestamp) as min_{{ date_column }}
+            , cast(max({{ date_column }}) as timestamp) as max_{{ date_column }}
             {% endif %}
         from {{ ref(old_table)}}
     )
@@ -90,8 +90,8 @@ with
             'New' as model
             , count(*) as row_count
             {% if date_column is not none %}
-            , min({{ date_column }})::timestamp as min_{{ date_column }}
-            , max({{ date_column }})::timestamp as max_{{ date_column }}
+            , cast(min({{ date_column }}) as timestamp) as min_{{ date_column }}
+            , cast(max({{ date_column }}) as timestamp) as max_{{ date_column }}
             {% endif %}
         from {{ ref(new_table)}}
     )
@@ -125,7 +125,7 @@ with
 
     , cte_union as (
         select * from old_join
-        union
+        union all
         select * from new_join
     )
 
