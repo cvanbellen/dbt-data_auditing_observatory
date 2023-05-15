@@ -19,11 +19,11 @@ Below we can see an example of a legacy table, and its work-in-progress refactor
 
 * __Example of a legacy table:__
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/28fd004c-f858-4dc9-b47c-0f0df4ee2552)
+![image](img/1_example_legacy_model.png)
 
 * __Example of a work-in-progress refactored table:__
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/01741113-1c02-4e0f-8c76-48d9b62d21fa)
+![image](img/1_example_refactored_model.png)
 
 Let's see if the macros can help us spot what is wrong with the refactored model.
 
@@ -72,11 +72,11 @@ Below we have the 2 possible outputs.
 
 The first possible output, when a date column is used within the comparison, shows up like this:
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/d5f237bc-4604-4573-baf2-077578bfaeb7)
+![image](img/3_macro_1_pt_1.png)
 
 And the second one, when the analysis does not involve a date column:
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/22242bcd-9f70-4e2f-9250-11a328f2dd87)
+![image](img/4_macro_1_without_date.png)
 
 We can see that this first macro quickly points out to a crucial structural difference between the both tables: the 'end_date' column from the legacy model is not represented in the refactored model, and this should be further investigated. Also, we are informed that the number of rows is coherent between both models, and the time interval analysis of the 'created_date' column indicates that we have data correspondent to the same time period in both cases.
 
@@ -215,8 +215,8 @@ Note that this macro follows the same shape as the previous one, the column_matc
 
 Below is the example output, split into two screenshots. Note how this EDA approach facilitates troubleshooting compatibility issues between the tables, making the AE’s life easier.
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/cf452948-9fc4-422a-ae85-7c055fd681bb)
+![image](img/7_macro_3_pt_1.png)
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/216f2fe1-400c-488f-8a77-7626b8902d9d)
+![image](img/8_macro_3_pt_2.png)
 
 With this macro, we can take a more detailed look at the data at column level, and possibly spot any issues regarding data types used, null entries, duplicated entries, or differences between minimum and maximum amounts for each column. Here, we can see clearly that minumum values for the 'amount' column aren't consistent between the tables, and that may help us identify within the data workflow what can be causing this 33,33% incompatibility rate!
