@@ -51,15 +51,15 @@ To run the macro, simply paste the following in a **.sql** file inside your dbt 
 
 ```sql
 -- Table Structure Report
---> db_connection can be ['snowflake', 'postgres' or 'redshift']
+--> db_connection can be ['snowflake' or 'postgres']
 {{ table_structure_report(
-    old_db = 'old_database'
-    , old_schema = 'old_schema'
+    db_connection = 'postgres'
+    , old_db = 'your_legacy_database'
+    , old_schema = 'your_legacy_schema'
     , old_table = 'example_old_model'
-    , new_db = 'new_database'
-    , new_schema = 'new_schema'
+    , new_db = 'your_refactored_database'
+    , new_schema = 'your_refactored_schema'
     , new_table = 'example_refactored_model'
-    , db_connection = 'postgres'
     , date_column = 'created_date'
 ) }}
 ```
@@ -199,11 +199,11 @@ Note that this macro follows the same shape as the previous one, the column_matc
 {% endset %}
 
 -- Run audit macro
---> db_connection can be ['snowflake', 'postgres' or 'redshift']
+--> db_connection can be ['snowflake' or 'postgres']
 {{ column_values_report(
-    primary_key = 'id'
+    db_connection = 'postgres'
+    , primary_key = 'id'
     , model_name = 'ExampleModel'
-    , db_connection = 'postgres'
     , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
     , columns_to_compare = column_variables
