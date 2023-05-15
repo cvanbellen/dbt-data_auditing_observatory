@@ -10,7 +10,7 @@ with
     , {{ column }}_old as (
         select
             '{{ column }}' as column_name
-            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            {% if db_connection == 'postgres' %}
             , pg_typeof({{ column }}) as old_data_type
             {% endif %}
             {% if db_connection == 'snowflake' %}
@@ -23,7 +23,7 @@ with
     , {{ column }}_new as (
         select
             '{{ column }}' as column_name
-            {% if db_connection == 'postgres' or db_connection == 'redshift' %}
+            {% if db_connection == 'postgres' %}
             , pg_typeof({{ column }}) as new_data_type
             {% endif %}
             {% if db_connection == 'snowflake' %}
@@ -37,8 +37,8 @@ with
         select
             '{{ column }}' as column_name
             , count(distinct {{ column }}) as old_distinct_count
-            , min({{ column }})::text as old_min_value
-            , max({{ column }})::text as old_max_value
+            , cast(min({{ column }}) as text) as old_min_value
+            , cast(max({{ column }}) as text) as old_max_value
         from old_query
     )
 
@@ -46,8 +46,8 @@ with
         select
             '{{ column }}' as column_name
             , count(distinct {{ column }}) as new_distinct_count
-            , min({{ column }})::text as new_min_value
-            , max({{ column }})::text as new_max_value
+            , cast(min({{ column }}) as text) as new_min_value
+            , cast(max({{ column }}) as text) as new_max_value
         from new_query
     )
 
@@ -100,7 +100,7 @@ with
     , report_union as (
         select * from {{ columns_to_compare[0] }}_joined
         {% for column in columns_to_compare[1:] %}
-        union
+        union all
         select * from {{ column }}_joined
         {% endfor %}
     )
