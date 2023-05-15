@@ -12,6 +12,21 @@ Each of these macros play an important role in creating a Data Quality Assurance
 
 ![image](https://user-images.githubusercontent.com/117457905/236840212-a32d859d-d7c3-44d2-b908-33f00f3f43fc.png)
 
+# Table Refactoring Example
+
+To better understand how the macros work, we provide an example of a work-in-progress refactoring process, in the shape of 2 tables that should match eachother. In the middle of a journey to refactor a single model or a complete data workflow in dbt, important differences between legacy and refactored models will inevitably appear, and the purpose of these macros is to enable the quick identification of the incompatibilities between the data, making the life easier for the Analytics Engineer in charge of the process.
+Below we can see an example of a legacy table, and its work-in-progress refactored counterpart:
+
+* __Example of a legacy table:__
+
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/28fd004c-f858-4dc9-b47c-0f0df4ee2552)
+
+* __Example of a work-in-progress refactored table:__
+
+![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/01741113-1c02-4e0f-8c76-48d9b62d21fa)
+
+Let's see if the macros can help us spot what is wrong with the refactored model.
+
 # Macros
 
 ## 1. table_structure_report():
@@ -22,6 +37,7 @@ The most straightforward macro, it consists in a dimensional comparison between 
 
 - row count;
 - number of columns;
+- missing columns in comparison with its counterpart;
 - oldest date of a date column (optional);
 - newest date of a date column (optional).
 
@@ -61,6 +77,8 @@ The first possible output, when a date column is used within the comparison, sho
 And the second one, when the analysis does not involve a date column:
 
 ![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/22242bcd-9f70-4e2f-9250-11a328f2dd87)
+
+We can see that this first macro quickly points out to a crucial structural difference between the both tables: the 'end_date' column from the legacy model is not represented in the refactored model, and this should be further investigated. Also, we are informed that the number of rows is coherent between both models, and the time interval analysis of the 'created_date' column indicates that we have data correspondent to the same time period in both cases.
 
 ## 2. column_match_report():
 
@@ -132,6 +150,8 @@ Below is this example’s output, split into two screenshots. Note that the mode
 
 ![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/b2af9ac2-3976-4dfb-8e79-cd18e1e7ca81)
 
+This second macro helps us to identify a compatibility issue within the 'amount' column: in 33,33% of the rows, the values do not match between the models! In this example, we know that this difference is due to different amount attributed to id = '003', but in a much larger model, with thousands or even millions of rows, each incompatibility issue should be further investigated. This macro enables the quantification of data compatibility between tables, but in order to really solve this problem, we will have to take a look at the actual data. That's what macro number 3 is for...
+
 ## 3. column_values_report():
 
 ### 3.1 Usage
@@ -198,3 +218,5 @@ Below is the example output, split into two screenshots. Note how this EDA appro
 ![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/cf452948-9fc4-422a-ae85-7c055fd681bb)
 
 ![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/216f2fe1-400c-488f-8a77-7626b8902d9d)
+
+With this macro, we can take a more detailed look at the data at column level, and possibly spot any issues regarding data types used, null entries, duplicated entries, or differences between minimum and maximum amounts for each column. Here, we can see clearly that minumum values for the 'amount' column aren't consistent between the tables, and that may help us identify within the data workflow what can be causing this 33,33% incompatibility rate!
