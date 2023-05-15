@@ -6,6 +6,20 @@
 
 The **dbt-data_audit_observatory** package, created by Indicium, helps delivering **************************observability************************** and ********************automation******************** to the process of data auditing between tables, specially when implementing data stack transition. With 3 specialized macros that approach several aspects of data validation in a data stack transitioning context, this package is used to compare the “old” (legacy) model with the “new” (refactored) model, quantifying and summarizing important information, such as table structure comparison and column-level compatibility overview.
 
+# Installation
+
+Installing this package into your dbt project is pretty straight-forward. You simply have to add the following to your _packages.yml_ file, at the package level:
+
+```sql
+packages:
+
+  - git: 'https://github.com/cvanbellen/dbt-data_auditing_observatory.git'
+```
+
+Your _packages.yml_ file is going to look similar to this:
+
+![image](img/9_dbt_packages.png)
+
 # Overview
 
 Each of these macros play an important role in creating a Data Quality Assurance layer in dbt, and providing Data teams with a huge observability increase in the data auditing process, especially when implementing data stack transition. With the complementary characteristic of the macros, we provide below a quick use-guide to the package, so the AE can jump right in into data auditing!
@@ -23,7 +37,7 @@ Below we can see an example of a legacy table, and its work-in-progress refactor
 
 * __Example of a work-in-progress refactored table:__
 
-![image](img/1_example_refactored_model.png)
+![image](img/2_example_refactored_model.png)
 
 Let's see if the macros can help us spot what is wrong with the refactored model.
 
@@ -146,9 +160,9 @@ Also, the ********************model_name******************** variable allows the
 
 Below is this example’s output, split into two screenshots. Note that the model name, associated with the run date information, can be used to generate automated data quality reports, warnings and Business Intelligence dashboards:
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/1024a6f8-035b-4422-bfbe-dd3576d6508b)
+![image](img/5_macro_2_pt_1.png)
 
-![image](https://github.com/cvanbellen/dbt-data_auditing_observatory/assets/117457905/b2af9ac2-3976-4dfb-8e79-cd18e1e7ca81)
+![image](img/6_macro_2_pt_2.png)
 
 This second macro helps us to identify a compatibility issue within the 'amount' column: in 33,33% of the rows, the values do not match between the models! In this example, we know that this difference is due to different amount attributed to id = '003', but in a much larger model, with thousands or even millions of rows, each incompatibility issue should be further investigated. This macro enables the quantification of data compatibility between tables, but in order to really solve this problem, we will have to take a look at the actual data. That's what macro number 3 is for...
 
