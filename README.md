@@ -10,7 +10,7 @@ The **dbt-data_audit_observatory** package, created by Indicium, helps deliverin
 
 Installing this package into your dbt project is pretty straight-forward. You simply have to add the following to your _packages.yml_ file, at the package level:
 
-```sql
+```yml
 packages:
 
   - git: 'https://github.com/cvanbellen/dbt-data_auditing_observatory.git'
