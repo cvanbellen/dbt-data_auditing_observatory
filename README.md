@@ -20,6 +20,10 @@ Your _packages.yml_ file is going to look similar to this:
 
 ![image](img/9_dbt_packages.png)
 
+## Database Connector Compatibility
+
+Right now, this package supports __Snowflake__ and __Postgres__ dbt connectors, but you can expect __Redshift__ and __Bigquery__ support to be added really soon!
+
 # Overview
 
 Each of these macros play an important role in creating a Data Quality Assurance layer in dbt, and providing Data teams with a huge observability increase in the data auditing process, especially when implementing data stack transition. With the complementary characteristic of the macros, we provide below a quick use-guide to the package, so the AE can jump right in into data auditing!
