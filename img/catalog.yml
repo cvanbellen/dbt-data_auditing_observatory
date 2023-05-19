@@ -16,6 +16,8 @@ metadata:
      url: https://github.com/cvanbellen/dbt-data_auditing_observatory/
    - title: Product Sheet
      url: https://github.com/cvanbellen/dbt-data_auditing_observatory/blob/main/img/%5BProduct%20Report%5D%20Data%20Auditing%20Observatory.pdf
+ annotations:
+  indicium.tech/product-url: https://github.com/cvanbellen/dbt-data_auditing_observatory/blob/main/img/%5BProduct%20Report%5D%20Data%20Auditing%20Observatory.pdf
 spec:
  title: Data Auditing Observatory
  type: product
