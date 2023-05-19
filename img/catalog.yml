@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+ name: Data Auditing Observatory dbt package
+ description: >
+  The dbt-data_audit_observatory package, created by Indicium,
+  helps delivering observability and automation to the process
+  of data auditing between tables, specially when implementing
+  data stack transition. With 3 specialized macros that approach
+  several aspects of data validation in a data stack transitioning context,
+  this package is used to compare the “old” (legacy) model with the “new”
+  (refactored) model, quantifying and summarizing important information,
+  such as table structure comparison and column-level compatibility overview.
+ links:
+   - title: GitHub repository
+     url: https://github.com/cvanbellen/dbt-data_auditing_observatory/
+   - title: Product Sheet
+     url: https://backstage.io/docs
+spec:
+ title: Data Auditing Observatory
+ type: product
+ owner: christian van bellen
+ lifecycle: experimental
+ version: v1.0.0
+ vertical: Team 42
+ interface: App
