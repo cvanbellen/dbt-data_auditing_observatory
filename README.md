@@ -125,13 +125,6 @@ It is important to explicitly declare all the columns that are going to be evalu
 Also, the ********************model_name******************** variable allows the aggregation of several auditing reports together, that can be used to generate data auditing BI reports!
 
 ```sql
--- Declare audited column names
-{% set column_variables = [
-    'id'
-    , 'amount'
-    , 'created_date'
-] %}
-
 -- Old model query
 {% set old_etl_relation_query %}
     select
@@ -156,7 +149,7 @@ Also, the ********************model_name******************** variable allows the
     , model_name = 'ExampleModel'
     , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
-    , columns_to_compare = column_variables
+    , columns_to_compare = ['id', 'amount', 'created_date']
 ) }}
 ```
 
@@ -191,13 +184,6 @@ To run the macro, simply paste the following in a **.sql** file inside your dbt 
 Note that this macro follows the same shape as the previous one, the column_match_report macro:
 
 ```sql
--- Declare audited column names
-{% set column_variables = [
-    'id'
-    , 'amount'
-    , 'created_date'
-] %}
-
 -- Old model query
 {% set old_etl_relation_query %}
     select
@@ -224,8 +210,7 @@ Note that this macro follows the same shape as the previous one, the column_matc
     , model_name = 'ExampleModel'
     , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
-    , columns_to_compare = column_variables
-
+    , columns_to_compare = ['id', 'amount', 'created_date']
 ) }}
 ```
 
