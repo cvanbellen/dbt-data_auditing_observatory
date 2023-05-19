@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
  name: >
-  Data Auditing Observatory dbt package
+  Product
  description: >
   The dbt-data_audit_observatory package, created by Indicium,
   helps delivering observability and automation to the process
