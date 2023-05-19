@@ -19,7 +19,7 @@ metadata:
 spec:
  title: Data Auditing Observatory
  type: product
- owner: christian van bellen
+ owner: indicium
  lifecycle: experimental
  version: v1.0.0
  vertical: Team 42
