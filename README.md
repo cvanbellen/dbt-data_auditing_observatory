@@ -20,6 +20,8 @@ Your _packages.yml_ file is going to look similar to this:
 
 ![image](img/9_dbt_packages.png)
 
+After adding the package to your _packages.yml_ file, simply run the `dbt deps` command on your CLI to install it!
+
 ## Database Connector Compatibility
 
 Right now, this package supports __Snowflake__ and __Postgres__ dbt connectors, but you can expect __Redshift__ and __Bigquery__ support to be added really soon!
