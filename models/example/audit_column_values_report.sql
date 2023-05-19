@@ -1,10 +1,3 @@
--- Declare audited column names
-{% set column_variables = [
-    'id'
-    , 'amount'
-    , 'created_date'
-] %}
-
 -- Old model query
 {% set old_etl_relation_query %}
     select
@@ -31,6 +24,5 @@
     , model_name = 'ExampleModel'
     , old_query = old_etl_relation_query
     , new_query = new_etl_relation_query
-    , columns_to_compare = column_variables
-
+    , columns_to_compare = ['id', 'amount', 'created_date']
 ) }}
