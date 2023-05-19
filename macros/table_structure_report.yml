@@ -1,0 +1,53 @@
+version: 2
+macros:
+  - name: table_structure_report
+    description: >
+     This macro consists in a dimensional comparison between legacy and refactored table structures,
+     featuring the following metrics:
+     * row count;
+     * number of columns;
+     * missing columns in comparison with its counterpart;
+     * oldest date of a date column (optional);
+     * newest date of a date column (optional).
+     The row count and the number of columns comparison subsidize a dimensional analysis of the table by the AE,
+     clearly informing about possible missing data between the two tables. The optional date reference column,
+     usually a 'date_synced' type column, can bring further detail to a missing data issue, allowing to quickly
+     identify if different time intervals are being used between the tables.
+    arguments:
+      - name: db_connection
+        type: varchar
+        description: >
+         Define the database connector adapter. Right now, this package supports 'snowflake' and 'postgres'
+         values for this argument, correspondent to the supported dbt-snowflake and dbt-postgres adapters.
+      - name: old_db
+        type: varchar
+        description: >
+         Name of the database where the legacy model is located. Required for bringing information schema data.
+      - name: old_schema
+        type: varchar
+        description: >
+         Name of the schema where the legacy model is located. Required for bringing information schema data.
+      - name: old_table
+        type: varchar
+        description: >
+         Name identifier of the legacy model. Required for bringing information schema data.
+      - name: new_db
+        type: varchar
+        description: >
+         Name of the database where the refactored model is located. Required for bringing information schema data.
+      - name: new_schema
+        type: varchar
+        description: >
+         Name of the schema where the refactored model is located. Required for bringing information schema data.
+      - name: new_table
+        type: varchar
+        description: >
+         Name identifier of the refactored model. Required for bringing information schema data.
+      - name: date_column
+        type: varchar
+        description: >
+         Name of the date column to be evaluated between both tables. Note that the columns need to have the same name
+         in the legacy and in the refactored table. The column renaming can be done within the old_query and new_query
+         arguments.
+    docs:
+     show: true

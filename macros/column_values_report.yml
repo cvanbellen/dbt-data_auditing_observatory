@@ -1,0 +1,50 @@
+version: 2
+macros:
+  - name: column_values_report
+    description: >
+     This macro uses the same primary key based full join logic as the column_match_report macro,
+     but focuses much more on visualizing the actual differences between the tables, acting as an
+     Exploratory Data Analysis (EDA) framework for the AE to quickly spot what can possibly be going wrong
+     within the data transformation steps, identifying patterns within the data.
+     The report is also presented at column-level, and the column pairs are compared based on:
+     * Data types;
+     * Distinct values count;
+     * Null entries count;
+     * Min value;
+     * Max value.
+    arguments:
+      - name: db_connection
+        type: varchar
+        description: >
+         Define the database connector adapter. Right now, this package supports 'snowflake' and 'postgres'
+         values for this argument, correspondent to the supported dbt-snowflake and dbt-postgres adapters.
+      - name: old_query
+        type: varchar
+        description: >
+         A regular SQL query referencing the legacy model. Note that standard SQL operations (like casting)
+         can be applied to the columns, enabling the AE to test different approaches to certain logic and
+         see how they perform in terms of data compatibility with the other table.
+      - name: new_query
+        type: varchar
+        description: >
+         A regular SQL query referencing the refactored model. Note that standard SQL operations (like casting)
+         can be applied to the columns, enabling the AE to test different approaches to certain logic and
+         see how they perform in terms of data compatibility with the other table.
+      - name: primary_key
+        type: varchar
+        description: >
+         Name of the primary key column used to join both tables. Note that the columns need to have the same name
+         in the legacy and in the refactored table. The column renaming can be done within the old_query and new_query
+         arguments.
+      - name: columns_to_compare
+        type: varchar
+        description: >
+         List of names of the columns to be evaluated by the macro. Can include the primary key column. The columns
+         need to have the same name in the legacy and in the refactored table. The column renaming can be done within
+         the old_query and new_query arguments.
+      - name: model_name
+        type: varchar
+        description: >
+         Name attributed to the model evaluated, for tracking purposes.
+    docs:
+     show: true
